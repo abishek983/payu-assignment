@@ -1,10 +1,12 @@
 import { React, useEffect, useState } from 'react';
 import * as S from "./styles"
-import ListItems from "../ListItems/"
+import ListItems from "../ListItems"
+import Search from "../Search"
 
 const ListingLayout = () => {
     const [data, setData] = useState([])
     const [selectedItems, setSelectedItems] = useState([])
+    const [searchedItems, setSearchedItems] = useState([])
     const [showSelected, setShowSelected] = useState(false)
     useEffect(() => {
         //can be used once cors issue is fixed
@@ -27,6 +29,7 @@ const ListingLayout = () => {
             .then(res => res.json())
             .then(res => {
                 setSelectedItems(new Array(res.config.length).fill(false))
+                setSearchedItems(res.config)
                 setData(res.config)
             })
     }
@@ -36,14 +39,20 @@ const ListingLayout = () => {
         setSelectedItems([...duplicateArr])
     }
 
+
     return (
         <>
-            <input
-                type="checkbox"
-                checked={showSelected}
-                onChange={() => setShowSelected(!showSelected)}
-            />
-            <p>Show Selected</p>
+            <S.FlexContainer>
+                <Search data={data} updatedValue={(items) => setSearchedItems(items)} />
+                <S.ShowSelectedCheckBoxContainer>
+                    <input
+                        type="checkbox"
+                        checked={showSelected}
+                        onChange={() => setShowSelected(!showSelected)}
+                    />
+                    <S.Ptag>Show Selected</S.Ptag>
+                </S.ShowSelectedCheckBoxContainer>
+            </S.FlexContainer>
             <S.Table>
                 <S.TabelBody>
                     <S.Tr>
@@ -57,14 +66,17 @@ const ListingLayout = () => {
                             Description
                 </S.Th>
                     </S.Tr>
-                    {!showSelected && data && data.map((data, key) => {
+
+                    {!showSelected && searchedItems && searchedItems.map((data, key) => {
                         return <ListItems data={data} handleCheckCLicked={() => handleCheckCLicked(key)} checkedstatus={selectedItems[key]} index={key} key={key} />
-                    })}
+                    })
+                    }
                     {
-                        showSelected && data.map((data, key) => {
+                        showSelected && searchedItems.map((data, key) => {
                             return selectedItems[key] && <ListItems data={data} handleCheckCLicked={() => handleCheckCLicked(key)} checkedstatus={selectedItems[key]} index={key} key={key} />
                         })
                     }
+
                 </S.TabelBody>
             </S.Table>
         </>

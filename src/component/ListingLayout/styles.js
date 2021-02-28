@@ -26,3 +26,19 @@ export const Td = styled.td`
 
 export const Tr = styled.tr`
 `
+
+export const Ptag = styled.p`
+    display: inline;
+`
+
+export const FlexContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    align-items:center;
+    margin: 20px auto;
+`
+
+export const ShowSelectedCheckBoxContainer = styled.div`
+    margin-left: auto;
+`

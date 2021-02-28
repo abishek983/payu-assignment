@@ -3,7 +3,7 @@ import * as LLSTyles from "../ListingLayout/styles"
 
 const ListItems = ({ data, index, handleCheckCLicked, checkedstatus }) => {
     return (
-        <LLSTyles.Tr key={index}>
+        <LLSTyles.Tr>
             <LLSTyles.Td>
                 <input
                     type="checkbox"
