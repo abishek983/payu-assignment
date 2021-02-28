@@ -8,7 +8,7 @@ const Search = ({ data, updatedValue }) => {
 
     useEffect(() => {
         const filter = data.filter(val => {
-            if (val.key.includes(searchValue))
+            if (val.key.includes(searchValue.toLocaleLowerCase()))
                 return val
         })
         updatedValue(filter)
